@@ -13,7 +13,7 @@
 #define DEBUG 0
 
 //Threshold to determine when to use parallel processing
-const size_t threshold = 10000;
+const size_t threshold = 17000;
 
 void generateMergeSortData (std::vector<int>& arr, size_t n) {
   for (size_t  i=0; i< n; ++i) {
@@ -87,7 +87,7 @@ void mergesort(int * arr, size_t l, size_t r, int* temp) {
       std::thread thread1 (mergesort, arr, l, mid, temp1); //Sort left half in thread1
       std::thread thread2 (mergesort, arr, mid+1, r, temp); //Sort right half in main thread
       thread1.join();
-      thread2.join
+      thread2.join();
 
       delete[] temp1;  // Clean up the temporary array
     } else {
