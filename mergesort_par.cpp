@@ -85,8 +85,9 @@ void mergesort(int * arr, size_t l, size_t r, int* temp) {
       int* temp1 = new int[r - l + 1];  // Allocate a separate temp array for thread1
 
       std::thread thread1 (mergesort, arr, l, mid, temp1); //Sort left half in thread1
-      mergesort(arr, mid+1, r, temp); //Sort right half in main thread
+      std::thread thread2 (mergesort, arr, mid+1, r, temp); //Sort right half in main thread
       thread1.join();
+      thread2.join();
 
       delete[] temp1;  // Clean up the temporary array
     } else {
