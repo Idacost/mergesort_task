@@ -8,8 +8,12 @@
 #include <algorithm>
 #include <chrono>
 #include <vector>
+#include <thread>
 
 #define DEBUG 0
+
+//Threshold to determine when to use parallel processing
+const size_t threshold = 10000;
 
 void generateMergeSortData (std::vector<int>& arr, size_t n) {
   for (size_t  i=0; i< n; ++i) {
@@ -75,13 +79,24 @@ void mergesort(int * arr, size_t l, size_t r, int* temp) {
   if (l < r) {
     size_t mid = (l+r)/2;
 
+    //Check if thread is worthwhile
+    if (r - l > threshold) {
+
+      int* temp1 = new int[r - l + 1];  // Allocate a separate temp array for thread1
+
+      std::thread thread1 (mergesort, arr, l, mid, temp1); //Sort left half in thread1
+      mergesort(arr, mid+1, r, temp); //Sort right half in main thread
+      thread1.join();
+
+      delete[] temp1;  // Clean up the temporary array
+    } else {
+      mergesort(arr, l, mid, temp);
+      mergesort(arr, mid+1, r, temp);
+    }
     
-    mergesort(arr, l, mid, temp);
-    mergesort(arr, mid+1, r, temp);
     merge(arr, l, mid+1, r, temp);
   }
 }
-
 
 int main (int argc, char* argv[]) {
   if (argc < 2) {
