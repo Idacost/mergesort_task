@@ -1,0 +1,14 @@
+Benchmarking Results
+=====================
+Array size: 9999
+Sequential time: 0.00108139
+Parallel time: 0.00107778
+=====================
+Array size: 99999
+Sequential time: 0.0132823
+Parallel time: 0.0168794
+=====================
+Array size: 19999999
+Sequential time: 3.73142
+Parallel time: 4.13677
+=====================
